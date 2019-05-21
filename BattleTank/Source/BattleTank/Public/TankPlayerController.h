@@ -29,4 +29,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.3333f;// координаты курсора на мониторе по оси Y
+
+	bool bGetlookDirection(FVector2D ScreenLocation, FVector& LookDiraction) const;
 };

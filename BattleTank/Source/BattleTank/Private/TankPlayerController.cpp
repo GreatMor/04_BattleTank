@@ -41,15 +41,31 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 bool ATankPlayerController::bGetSightRayHitLocation(FVector& HitLocation) const
 {
-	//найти расположение прицела 
+	//найти расположение прицела в пиксельных координатах 
 	int32 ViewportSizeX, ViewportSizeY; //out parameter –азмер текущего экрана
 
 	GetViewportSize(ViewportSizeX, ViewportSizeY);// получает размер экрана 
-	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
-
-	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s "), (*ScreenLocation.ToString()));
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);	
 
 	//ƒепроджект - положение экрана , куросора или прицела 
-	//лайн трейс в направление прицела , показывает что в конечном этоге мы удрим 
+
+	FVector LookDiraction;//Out parameter
+	if (bGetlookDirection(ScreenLocation, LookDiraction))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WorldDirection : %s "), (*LookDiraction.ToString()));
+	}
+
+	//лайн трейс в направление LookDiraction , показывает что в конечном этоге мы удрим 
 	return true;
+}
+
+bool ATankPlayerController::bGetlookDirection(FVector2D ScreenLocation, FVector& LookDiraction) const
+{
+	FVector CameraWorldLocation; // out parameter 	
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X,
+		ScreenLocation.Y,
+		CameraWorldLocation,
+		LookDiraction
+		);//ѕреобразование 2D-положени€ экрана в World Space 3D-положение 	
 }

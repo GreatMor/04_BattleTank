@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Tank.h"
 #include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
+#include "Camera/PlayerCameraManager.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -22,13 +24,18 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	bool bGetSightRayHitLocation(FVector& HitLocation) const;// направляет лучь сквозь прицел трасировка 
+	bool GetSightRayHitLocation(FVector& HitLocation) const;// направляет лучь сквозь прицел трасировка 
 	
 	UPROPERTY(EditAnywhere)
-	float CrosshairXLocation = 0.5f;// координаты курсора на мониторе по оси Х
+	float CrosshairXLocation = 0.5f;// координаты прицела  на мониторе по оси Х
 
 	UPROPERTY(EditAnywhere)
-	float CrosshairYLocation = 0.3333f;// координаты курсора на мониторе по оси Y
+	float CrosshairYLocation = 0.3333f;// координаты прицела на мониторе по оси Y
 
-	bool bGetlookDirection(FVector2D ScreenLocation, FVector& LookDiraction) const;
+	UPROPERTY(EditAnywhere)
+	float LainTraceRange = 1000000;//LainTraceRange для расчёта дальности трасировки 
+
+	bool bGetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;//вернет LookDirection
+
+	bool GetLookVectorHitLocation(FVector LookDerection, FVector& HitLocation) const;
 };

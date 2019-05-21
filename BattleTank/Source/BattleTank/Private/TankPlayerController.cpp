@@ -3,21 +3,6 @@
 
 #include "TankPlayerController.h"
 
-ATank* ATankPlayerController::GetControllerTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-void ATankPlayerController::AimTowardsCrosshair()
-{
-	FVector HitLocation; // OutParameter
-
-	if (bGetSightRayHitLocation(HitLocation))
-	{
-		
-		if (!GetControllerTank()) { return; }
-	}
-}
 
 void ATankPlayerController::BeginPlay()
 {
@@ -25,11 +10,11 @@ void ATankPlayerController::BeginPlay()
 	auto ControllerTank = GetControllerTank();
 	if (!ControllerTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not Possessig a tank"));
+		//UE_LOG(LogTemp, Warning, TEXT("PlayerController not Possessig a tank"));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController Possessig: %s "), *(ControllerTank->GetName()));
+		//UE_LOG(LogTemp, Warning, TEXT("PlayerController Possessig: %s "), *(ControllerTank->GetName()));
 	}
 }
 
@@ -39,7 +24,24 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-bool ATankPlayerController::bGetSightRayHitLocation(FVector& HitLocation) const
+ATank* ATankPlayerController::GetControllerTank() const
+{
+	return Cast<ATank>(GetPawn());
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	FVector HitLocation; // OutParameter	
+		
+	if (!GetControllerTank()) { return; }
+	if (GetSightRayHitLocation(HitLocation)) // гетер проводит трасировку 
+	{		
+		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *HitLocation.ToString());		
+	}
+}
+
+// ѕолучить мировое местоположение линии трассировки через перекрестие, true если попадет в ландшафт
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	//найти расположение прицела в пиксельных координатах 
 	int32 ViewportSizeX, ViewportSizeY; //out parameter –азмер текущего экрана
@@ -49,23 +51,45 @@ bool ATankPlayerController::bGetSightRayHitLocation(FVector& HitLocation) const
 
 	//ƒепроджект - положение экрана , куросора или прицела 
 
-	FVector LookDiraction;//Out parameter
-	if (bGetlookDirection(ScreenLocation, LookDiraction))
+	FVector LookDirection;//Out parameter
+	if (bGetLookDirection(ScreenLocation,LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("WorldDirection : %s "), (*LookDiraction.ToString()));
+		//лайн трейс в направление LookDirection , показывает что в конечном этоге мы удрим 
+		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
-	//лайн трейс в направление LookDiraction , показывает что в конечном этоге мы удрим 
+	
 	return true;
 }
 
-bool ATankPlayerController::bGetlookDirection(FVector2D ScreenLocation, FVector& LookDiraction) const
+bool ATankPlayerController::bGetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation; // out parameter 	
 	return DeprojectScreenPositionToWorld(
 		ScreenLocation.X,
 		ScreenLocation.Y,
 		CameraWorldLocation,
-		LookDiraction
+		LookDirection
 		);//ѕреобразование 2D-положени€ экрана в World Space 3D-положение 	
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDerection, FVector& HitLocation) const
+{
+	FHitResult HitResult;// parameter for LineTraceSingleByChannel (struct FHitResult & OutHit,) return HitResult(место удара луча)
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();// parameter for LineTraceSingleByChannel (Start)
+	auto EndLocation = StartLocation + (LookDerection * LainTraceRange);// parameter for LineTraceSingleByChannel (end)
+
+	if (GetWorld()->LineTraceSingleByChannel(  //Trace a ray against the world using a specific channel and return the first blocking hit
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
+	))
+	{
+		HitLocation = HitResult.Location;
+		return true;
+	}
+
+	HitLocation = FVector(0);
+	return false;
 }

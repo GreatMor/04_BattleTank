@@ -14,7 +14,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (bGetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s "), (*HitLocation.ToString()));
+		
 		if (!GetControllerTank()) { return; }
 	}
 }
@@ -41,6 +41,15 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 bool ATankPlayerController::bGetSightRayHitLocation(FVector& HitLocation) const
 {
-	HitLocation = FVector(1);
+	//найти расположение прицела 
+	int32 ViewportSizeX, ViewportSizeY; //out parameter Размер текущего экрана
+
+	GetViewportSize(ViewportSizeX, ViewportSizeY);// получает размер экрана 
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+
+	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s "), (*ScreenLocation.ToString()));
+
+	//Депроджект - положение экрана , куросора или прицела 
+	//лайн трейс в направление прицела , показывает что в конечном этоге мы удрим 
 	return true;
 }

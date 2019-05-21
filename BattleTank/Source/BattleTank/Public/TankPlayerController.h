@@ -15,7 +15,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
+private:
 	ATank* GetControllerTank() const; // вернёт указатель на танк чтобы TankPlayerController знал каким танком управлять 
 
 	void AimTowardsCrosshair(); // прицеливание через прицел 
@@ -24,4 +24,9 @@ public:
 
 	bool bGetSightRayHitLocation(FVector& HitLocation) const;// направляет лучь сквозь прицел трасировка 
 	
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = 0.5f;// координаты курсора на мониторе по оси Х
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = 0.3333f;// координаты курсора на мониторе по оси Y
 };

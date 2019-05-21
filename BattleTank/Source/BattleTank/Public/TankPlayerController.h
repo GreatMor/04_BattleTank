@@ -18,6 +18,10 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	ATank* GetControllerTank() const; // вернёт указатель на танк чтобы TankPlayerController знал каким танком управлять 
 
+	void AimTowardsCrosshair(); // прицеливание через прицел 
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	bool bGetSightRayHitLocation(FVector& HitLocation) const;// направляет лучь сквозь прицел трасировка 
 	
 };

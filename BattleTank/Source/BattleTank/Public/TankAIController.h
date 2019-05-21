@@ -21,6 +21,6 @@ private:
 	virtual void BeginPlay() override;
 
 	ATank* GetControllerTank() const; // опрееление танка для ai controller
-	ATank* GetPlayerTank() const;// вернёт куазатель на танк иигрока
+	ATank* GetPlayerTank() const;// вернёт уазатель на танк иигрока
 
 };

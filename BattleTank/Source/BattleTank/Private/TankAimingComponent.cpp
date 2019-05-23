@@ -43,24 +43,31 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 	FVector OutLaunchVelocity;// Out Parameter
 	FVector StartLocation = Barrel->GetSocketLocation(FName("LaunchLocation"));
-
-	if (UGameplayStatics::SuggestProjectileVelocity
-			( // Вычисляет скорость запуска снаряда, чтобы попасть в указанную точку.
-				this,
-				OutLaunchVelocity,
-				StartLocation,
-				HitLocation,
-				LaunchSpeed,
-				false, 
-				0,
-				0,
-				ESuggestProjVelocityTraceOption::DoNotTrace			
-			)
+	bool bHaveAimSolution = (UGameplayStatics::SuggestProjectileVelocity
+		( // Вычисляет скорость запуска снаряда, чтобы попасть в указанную точку.
+			this,
+			OutLaunchVelocity,
+			StartLocation,
+			HitLocation,
+			LaunchSpeed,
+			ESuggestProjVelocityTraceOption::DoNotTrace
 		)
-	{
-		//	Calculate the OutLaunchVelocity.
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("aiming  %s "), *(AimDirection.ToString()));
-	}	
+	);
+
+		if (bHaveAimSolution)		
+		{
+			//	Calculate the OutLaunchVelocity.
+			auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+			MoveBarrelTowards(AimDirection);
+		}	
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{	
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();//Получите прямой (X) вектор направления единицы из этого компонента в мировом пространстве.
+	auto AimAsRotation = AimDirection.Rotation();// цель направления
+
+	UE_LOG(LogTemp, Warning, TEXT(" AimAsRottation  %s "), *AimAsRotation.ToString())
+
 }
 

@@ -31,9 +31,18 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AimAt(FVector HitLocation,float LaunchSpeed);
+
+	
 	
 private:
 
 	UStaticMeshComponent* Barrel = nullptr; // указатель на ствол танка 
+
+	//TODO SetTurretReference
+
+	
+			
+	void MoveBarrelTowards(FVector AimDirection); // движение ствола 
+
 
 };

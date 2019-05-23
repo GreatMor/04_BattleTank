@@ -6,6 +6,7 @@
 #include "Tank.h"
 #include "AIController.h"
 #include "Engine/World.h"
+#include "TankPlayerController.h"
 #include "GameFramework/PlayerController.h"
 #include "TankAIController.generated.h"
 
@@ -19,6 +20,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 private:
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime);
 
 	ATank* GetControllerTank() const; // опрееление танка для ai controller
 	ATank* GetPlayerTank() const;// вернёт уазатель на танк иигрока

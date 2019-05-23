@@ -34,9 +34,10 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // OutParameter	
 		
 	if (!GetControllerTank()) { return; }
+
 	if (GetSightRayHitLocation(HitLocation)) // гетер проводит трасировку 
 	{		
-		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *HitLocation.ToString());		
+		GetControllerTank()->AimAt(HitLocation);
 	}
 }
 

@@ -15,7 +15,16 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable)
+
 	void Elevate(float DegreesPerSecond);//поднять ствол градусы в секунду 
-	
+
+private:
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxDegreesPerSecond = 20;//Макс. Градусов в секунду
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxElevatePegrees	 = 40;//	Максимальный уровень повышения
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MinElevateSecond = 0;// 	
 };

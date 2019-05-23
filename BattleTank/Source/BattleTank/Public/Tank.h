@@ -35,4 +35,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere, Category = "Shoots")
+	float LaunchSpeed = 100000; // начальная скорость выстрела 1000 м/с
+
 };

@@ -15,7 +15,7 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
-
+	// -1 Max downward speed and +1 mas up movement
 	void Elevate(float DegreesPerSecond);//поднять ствол градусы в секунду 
 
 private:

@@ -39,8 +39,28 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	auto NameTank = GetOwner()->GetName();
-	auto BarrelLocation = Barrel->GetComponentLocation().ToString();
-	UE_LOG(LogTemp, Warning, TEXT("LaunchSpeed %f "), LaunchSpeed);
+	if (!Barrel) { return; }
+
+	FVector OutLaunchVelocity;// Out Parameter
+	FVector StartLocation = Barrel->GetSocketLocation(FName("LaunchLocation"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity
+			( // Вычисляет скорость запуска снаряда, чтобы попасть в указанную точку.
+				this,
+				OutLaunchVelocity,
+				StartLocation,
+				HitLocation,
+				LaunchSpeed,
+				false, 
+				0,
+				0,
+				ESuggestProjVelocityTraceOption::DoNotTrace			
+			)
+		)
+	{
+		//	Calculate the OutLaunchVelocity.
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		UE_LOG(LogTemp, Warning, TEXT("aiming  %s "), *(AimDirection.ToString()));
+	}	
 }
 

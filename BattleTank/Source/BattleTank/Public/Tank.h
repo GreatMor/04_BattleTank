@@ -18,6 +18,9 @@ public:
 
 	void AimAt(FVector HitLOcation);
 
+	UFUNCTION(BlueprintCallable)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

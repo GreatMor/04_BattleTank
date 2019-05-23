@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "TankAimingComponent.h"// состовная часть танка 
 #include "Tank.generated.h"
 
 UCLASS()
@@ -20,6 +21,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY()
+	UTankAimingComponent* TankAimingComponent = nullptr;// создаём указатель на компонент наведения 
 
 public:	
 	// Called every frame

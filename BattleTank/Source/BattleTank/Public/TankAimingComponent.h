@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/SceneComponent.h"
+#include "Engine/Engine.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
@@ -22,6 +23,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	UFUNCTION()
 	void SetBarrelReference(UTankBarrel* BarrelToSet); //устанавливает ссылку на ствол танка 
 
 protected:
@@ -32,19 +34,14 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector HitLocation,float LaunchSpeed);
-
-	
+	void AimAt(FVector HitLocation,float LaunchSpeed);	
 	
 private:
 	UPROPERTY(EditAnywhere)
 	UTankBarrel* Barrel = nullptr; // указатель на ствол танка 
 
-	//TODO SetTurretReference
-
-	
+	//TODO SetTurretReference	
 			
 	void MoveBarrelTowards(FVector AimDirection); // движение ствола 
-
 
 };

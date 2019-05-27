@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
+#include "Math/UnrealMathUtility.h"
+#include "Engine/Engine.h"
+#include "GameFramework/RotatingMovementComponent.h"
 #include "TankBarrel.generated.h"
 
 /**
@@ -16,15 +19,16 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 
 public:
 	// -1 Max downward speed and +1 mas up movement
-	void Elevate(float DegreesPerSecond);//подн€ть ствол градусы в секунду 
+	void Elevate(float RelativeSpeed);//подн€ть ствол градусы в секунду 
+	UTankBarrel();
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxDegreesPerSecond = 20;//ћакс. √радусов в секунду
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxElevatePegrees	 = 40;//	ћаксимальный уровень повышени€
+	float MaxElevationDegrees = 40;//	ћаксимальный уровень повышени€
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MinElevateSecond = 0;// 	
+	float MinElevationDegrees = 0;// 	
 };

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -8,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick =  true; // TODO Should this really tick?
+	PrimaryComponentTick.bCanEverTick =  false; 
 
 	// ...
 }
@@ -16,7 +17,13 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{	
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -50,6 +57,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			StartLocation,
 			HitLocation,
 			LaunchSpeed,
+			false,
+			0,
+			0,
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		)
 	);
@@ -60,12 +70,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 			MoveBarrelTowards(AimDirection);
 			auto Time = GetWorld()->GetTimeSeconds();
-			UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
+			//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
 		}	
 		else
 		{
 			auto Time = GetWorld()->GetTimeSeconds();
-			UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
+			//UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
 		}
 }
 
@@ -75,8 +85,13 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotation = AimDirection.Rotation();// цель направления
 	auto DeltaRotator = AimAsRotation - BarrelRotation;//
 
-	Barrel->Elevate(DeltaRotator.Pitch);
-	
+	if (FMath::Abs(DeltaRotator.Yaw) > 180.f)
+	{
+		DeltaRotator.Yaw *= (-1.f);
+	}
 
+	Barrel->Elevate(DeltaRotator.Pitch);
+
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 

@@ -7,12 +7,11 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/SceneComponent.h"
-#include "Engine/Engine.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel; // Forward Declaration
-
+class UTankTurret;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -23,8 +22,9 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UFUNCTION()
 	void SetBarrelReference(UTankBarrel* BarrelToSet); //устанавливает ссылку на ствол танка 
+
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	// Called when the game starts
@@ -34,14 +34,20 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector HitLocation,float LaunchSpeed);	
+	void AimAt(FVector HitLocation,float LaunchSpeed);
+
+	
 	
 private:
-	UPROPERTY(EditAnywhere)
+
 	UTankBarrel* Barrel = nullptr; // указатель на ствол танка 
 
-	//TODO SetTurretReference	
+	UTankTurret * Turret = nullptr;
+	//TODO SetTurretReference
+
+	
 			
 	void MoveBarrelTowards(FVector AimDirection); // движение ствола 
+
 
 };

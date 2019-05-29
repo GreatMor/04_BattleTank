@@ -8,6 +8,8 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -17,11 +19,17 @@ class BATTLETANK_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
+	
+	UFUNCTION(BlueprintCallable)
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable)
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLOcation);
 
 	UFUNCTION(BlueprintCallable)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void Fire();
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,6 +44,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = "Shoots")
-	float LaunchSpeed = 100000; // начальная скорость выстрела 1000 м/с
+	float LaunchSpeed = 10000.f; // начальная скорость выстрела 1000 м/с
 
 };

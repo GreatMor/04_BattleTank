@@ -9,7 +9,6 @@
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerController.h"
 #include "TankAIController.generated.h"
-
 /**
  * 
  */
@@ -23,7 +22,7 @@ private:
 
 	virtual void Tick(float DeltaTime);
 
-	//ATank* GetControllerTank() const; // опрееление танка для ai controller
+	ATank* GetControllerTank() const; // опрееление танка для ai controller
 	ATank* GetPlayerTank() const;// вернёт уазатель на танк иигрока
 
 };

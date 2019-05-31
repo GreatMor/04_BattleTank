@@ -23,7 +23,7 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet); //устанавливает ссылку на ствол танка 
-
+	
 	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
@@ -34,20 +34,14 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector HitLocation,float LaunchSpeed);
-
-	
+	void AimAt(FVector HitLocation,float LaunchSpeed);	
 	
 private:
 
 	UTankBarrel* Barrel = nullptr; // указатель на ствол танка 
 
 	UTankTurret * Turret = nullptr;
-	//TODO SetTurretReference
 
-	
-			
 	void MoveBarrelTowards(FVector AimDirection); // движение ствола 
-
 
 };

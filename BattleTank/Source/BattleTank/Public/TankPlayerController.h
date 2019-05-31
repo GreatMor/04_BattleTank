@@ -26,13 +26,13 @@ private:
 
 	bool GetSightRayHitLocation(FVector& HitLocation) const;// направляет лучь сквозь прицел трасировка 
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;// координаты прицела  на мониторе по оси Х
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.3333f;// координаты прицела на мониторе по оси Y
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LainTraceRange = 1000000;//LainTraceRange для расчёта дальности трасировки 
 
 	bool bGetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;//вернет LookDirection

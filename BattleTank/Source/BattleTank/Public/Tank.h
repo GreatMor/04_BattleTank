@@ -44,14 +44,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = "Shoots")
+	UPROPERTY(EditDefaultsOnly, Category = "Shoots")
 	float LaunchSpeed = 4000.f; // начальна€ скорость выстрела 1000 м/с
-	UPROPERTY(EditAnywhere, Category = "Shoots")
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf <AProjectile> ProjectileBlueprint;
 
 	UTankBarrel * Barrel = nullptr;
 
-	float RelodingTimeInSeconds = 5;//ѕерезагружа€ врем€ в секундах
+	UPROPERTY(EditDefaultsOnly, Category = "Shoots")
+	float RelodingTimeInSeconds = 3;//ѕерезагружа€ врем€ в секундах
 	double LastFierTime = 0; 
 
 };

@@ -45,7 +45,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = "Shoots")
-	float LaunchSpeed = 10000.f; // начальная скорость выстрела 1000 м/с
+	float LaunchSpeed = 4000.f; // начальная скорость выстрела 1000 м/с
 	UPROPERTY(EditAnywhere, Category = "Shoots")
 	TSubclassOf <AProjectile> ProjectileBlueprint;
 

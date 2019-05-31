@@ -17,7 +17,6 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
-	
 	Barrel = BarrelToSet;
 }
 

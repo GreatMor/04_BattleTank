@@ -9,6 +9,7 @@
 
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 
 UCLASS()
@@ -45,5 +46,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Shoots")
 	float LaunchSpeed = 10000.f; // начальная скорость выстрела 1000 м/с
+	UPROPERTY(EditAnywhere, Category = "Shoots")
+	TSubclassOf <AProjectile> ProjectileBlueprint;
+
+	UTankBarrel * Barrel = nullptr;
 
 };

@@ -51,4 +51,7 @@ public:
 
 	UTankBarrel * Barrel = nullptr;
 
+	float RelodingTimeInSeconds = 5;//Перезагружая время в секундах
+	double LastFierTime = 0; 
+
 };

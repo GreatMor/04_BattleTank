@@ -32,15 +32,39 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::Fire()
 {
-	
-	auto Projectile = GetWorld()->SpawnActor <AProjectile>
-		(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("LaunchLocation")),
-		Barrel->GetSocketRotation(FName(" LaunchLocation "))
-		);
+	/*FPlatformTime::Seconds() - LastFierTime) > RelodingTimeInSeconds;
+	0  - 0 > 3 np
+	1 - 0 > 3 no
+	2 - 0 > 3 no 
+	3 - 0 > 3 no 
+	4 - 0 > 3 yes
+	Projectile->LaunchProjectile(LaunchSpeed);// выстреливаем снаряд со скоростью
+	LastFierTime = FPlatformTime::Seconds(); 
+	 LastFierTime = 4
+	4-4>3 no
+	5-4>3 no
+	6-4>3 no
+	7-4>3 no
+	8-4>3 yes 
+	Projectile->LaunchProjectile(LaunchSpeed);// выстреливаем снаряд со скоростью
+	LastFierTime = FPlatformTime::Seconds();
+	 LastFierTime = 8
 
-	Projectile->LaunchProjectile(LaunchSpeed);
+	*/
+	bool isReloaded = (FPlatformTime::Seconds() - LastFierTime) > RelodingTimeInSeconds;//	если это вычетаниек больше чем перезагрузить 
+
+	if (Barrel && isReloaded)//если есть ствол и мы перехаряжились 
+	{
+		auto Projectile = GetWorld()->SpawnActor <AProjectile>// создаём снаряд 
+			(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("LaunchLocation")),
+				Barrel->GetSocketRotation(FName(" LaunchLocation "))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);// выстреливаем снаряд со скоростью
+		LastFierTime = FPlatformTime::Seconds();// последнее время выстрела меняяем с нуля на время последнего действия 
+	}
 }
 
 

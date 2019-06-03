@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"// состовная часть танка 
+#include "TankMovementComponent.h"
 #include "Tank.generated.h"
 
 class UTankBarrel;
@@ -39,6 +40,8 @@ protected:
 	UPROPERTY()
 	UTankAimingComponent* TankAimingComponent = nullptr;// создаём указатель на компонент наведения 
 
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 public:	
 	
 	// Called to bind functionality to input

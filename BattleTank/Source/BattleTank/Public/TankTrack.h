@@ -18,7 +18,7 @@ public:
 	UFUNCTION(blueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float TrackMaxDrivingForce = 4000000;//Максимальная силна на track в Ньютонах
 
 };

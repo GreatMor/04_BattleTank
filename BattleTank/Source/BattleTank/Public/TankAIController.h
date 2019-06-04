@@ -17,6 +17,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 private:
+
+	float AcceptanceRadius = 3000.f;// аи приблизится на 30 метров(3000см)
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime)override;

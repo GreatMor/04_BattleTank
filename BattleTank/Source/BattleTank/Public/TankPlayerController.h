@@ -16,9 +16,12 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+protected:
 
-private:
+	UFUNCTION(BlueprintCallable)
 	ATank* GetControllerTank() const; // вернёт указатель на танк чтобы TankPlayerController знал каким танком управлять 
+
+private:	
 
 	void AimTowardsCrosshair(); // прицеливание через прицел 
 	virtual void BeginPlay() override;

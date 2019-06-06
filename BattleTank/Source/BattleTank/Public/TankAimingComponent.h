@@ -30,9 +30,8 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrelReference(UTankBarrel* BarrelToSet); //устанавливает ссылку на ствол танка 
-	
-	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = " Настройка ")
+	void  Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
 protected:
 	// Called when the game starts
